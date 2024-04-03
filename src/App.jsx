@@ -14,9 +14,12 @@ function App() {
   const searchMovies = async (title) => {
     const response = await fetch(`${API_URL}&s=${title}`);
     const data = await response.json();
-
-    setMovies(data.Search);
-    setAvailableYear(data.Search.map(item => item.Year));
+    if(data.Response === "True") {
+      setMovies(data.Search);
+      setAvailableYear(data?.Search.map(item => item.Year));
+    } else {
+      setMovies([]);
+    }
   }
   useEffect(() => {
     searchMovies("James Bond");
@@ -70,10 +73,14 @@ function App() {
       {filterYear ? 
             <div className="availableYear">
               {
-                filterAvailableYear.map((item, index) => <li key={index} >{item}</li>)
+                filterAvailableYear.length > 1 && filterAvailableYear.map((item, index) => 
+                  <li key={index} onClick={(e) => {setFilterYear(e.target.innerText)}}>
+                    {item}
+                  </li>
+                )
               }
             </div>
-            :null
+            : null
           }
 
       {
