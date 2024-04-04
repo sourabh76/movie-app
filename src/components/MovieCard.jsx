@@ -1,8 +1,12 @@
 import React from "react";
 
 const MovieCard = ({movie}) => {
+    const handleClick = () => {
+        alert("Video Clicked");
+    }
+
     return (
-        <div className="movie">
+        <div className="movie" onClick={handleClick}>
             <div>
                 <p>{movie.Year}</p>
             </div>
